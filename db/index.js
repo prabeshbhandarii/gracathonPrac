@@ -1,6 +1,10 @@
 import mongoose from 'mongoose'
+import dotenv from 'dotenv'
+dotenv.config()
+const DATABASE_URL = process.env.DATABASE_URL
+console.log(DATABASE_URL)
 
-mongoose.connect('mongodb+srv://prabeshbhandari842:eyHb3RbfU8Ymi3rt@cluster0.jvd7wuw.mongodb.net/gracathon')
+mongoose.connect(DATABASE_URL)
 
 const DoctorSchema = new mongoose.Schema({
     name: {
@@ -31,7 +35,7 @@ const DoctorSchema = new mongoose.Schema({
         type: String,
         required: false,
     }
-})
+}, { timestamps: true })
 
 const PatientSchema = new mongoose.Schema({
     name: {
@@ -46,13 +50,10 @@ const PatientSchema = new mongoose.Schema({
         type: [String],
         required: false,
     }
-})
+}, { timestamps: true })
 
 
 const Doctor = mongoose.model('Doctor', DoctorSchema)
 const Patient = mongoose.model('Patient', PatientSchema)
 
-module.exports = {
-    Doctor, 
-    Patient
-}
+export { Doctor, Patient }
